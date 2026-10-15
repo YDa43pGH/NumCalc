@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/NumCalc.App/NumCalc.App.csproj" />
+    <Project Path="src/NumCalc.Core/NumCalc.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NumCalc.Tests/NumCalc.Tests.csproj" />
+  </Folder>
+</Solution>

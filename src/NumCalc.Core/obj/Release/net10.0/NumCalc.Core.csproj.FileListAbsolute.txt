@@ -1,0 +1,11 @@
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/bin/Release/net10.0/NumCalc.Core.deps.json
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/bin/Release/net10.0/NumCalc.Core.dll
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/bin/Release/net10.0/NumCalc.Core.pdb
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/NumCalc.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/NumCalc.Core.AssemblyInfoInputs.cache
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/NumCalc.Core.AssemblyInfo.cs
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/NumCalc.Core.csproj.CoreCompileInputs.cache
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/NumCalc.Core.dll
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/refint/NumCalc.Core.dll
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/NumCalc.Core.pdb
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/ref/NumCalc.Core.dll
