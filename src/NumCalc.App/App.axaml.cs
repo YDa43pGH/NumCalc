@@ -14,7 +14,7 @@ namespace NumCalc.App;
 public partial class NumCalcApp : Application
 {
 
-    public new static NumCalcApp? Current => (NumCalcApp?)Application.Current;
+    public new static NumCalcApp? Current => Application.Current as NumCalcApp;
     public IServiceProvider Services { get; private set; } = null!;
 
     public override void Initialize()

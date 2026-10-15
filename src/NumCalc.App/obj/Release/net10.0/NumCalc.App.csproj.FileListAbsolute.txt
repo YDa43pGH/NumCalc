@@ -105,3 +105,4 @@
 /home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.App/obj/Release/net10.0/NumCalc.App.pdb
 /home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.App/obj/Release/net10.0/NumCalc.App.genruntimeconfig.cache
 /home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.App/obj/Release/net10.0/ref/NumCalc.App.dll
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.App/obj/Release/net10.0/NumCalc.App.sourcelink.json

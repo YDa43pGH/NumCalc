@@ -9,3 +9,4 @@
 /home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/refint/NumCalc.Core.dll
 /home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/NumCalc.Core.pdb
 /home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/ref/NumCalc.Core.dll
+/home/loggerlife/college_studying/Practical_training/NumCalc/src/NumCalc.Core/obj/Release/net10.0/NumCalc.Core.sourcelink.json
