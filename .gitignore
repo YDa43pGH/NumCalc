@@ -1,0 +1,29 @@
+## Окружение компиляции и сборки (Artifacts)
+[Db]in/
+[Ob]j/
+[An]alysers/
+
+## Кэш и логи dotnet
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.metadata/
+
+## Локальные папки IDE и редакторов
+.vs/
+.idea/
+.vscode/
+.nvim/
+.DS_Store
+
+## Пакеты и инструменты
+[Pp]ackages/
+*.nuget.props
+*.nuget.targets
+.paket/
+
+## Файлы конфигурации пользователя (чтобы не утекли пароли/строки подключения)
+*.usersettings
+appsettings.Development.json
+

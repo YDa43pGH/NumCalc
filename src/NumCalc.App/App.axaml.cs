@@ -3,15 +3,15 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using NumCalc.App.Services.Fakes;
 using NumCalc.App.Services.Settings;
+using NumCalc.App.Services;
 using NumCalc.Core;
 using NumCalc.App.ViewModels;
 using NumCalc.App.Views;
 
 namespace NumCalc.App;
 
-public partial class NumCalcApp : Application
+internal partial class NumCalcApp : Application
 {
 
     public new static NumCalcApp? Current => Application.Current as NumCalcApp;
@@ -35,9 +35,9 @@ public partial class NumCalcApp : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    private void ConfigureServices(IServiceCollection services)
+    private static void ConfigureServices(IServiceCollection services)
     {
-      services.AddSingleton<ICalculatorService, MockCalculatorService>();
+      services.AddSingleton<ICalculatorService, CalculatorService>();
 
         services.AddTransient<MainViewModel>();
         services.AddTransient<MainWindow>(provider => new MainWindow
@@ -47,7 +47,7 @@ public partial class NumCalcApp : Application
     }
 
 
-    private IConfiguration BuildConfiguration()
+    private static IConfiguration BuildConfiguration()
     {
         return new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())

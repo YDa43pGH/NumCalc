@@ -1,6 +1,6 @@
 namespace NumCalc.App.Services.Settings;
 
-public class CalculatorSettings
+internal class CalculatorSettings
 {
     public CalculatorSettings() { }
 }

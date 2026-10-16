@@ -1,22 +1,1357 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:NumCalc.App.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="NumCalc.App.Views.MainWindow"
-        x:DataType="vm:MainViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="NumCalc.App">
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="1440"
+             d:DesignHeight="900"
+             x:Class="NumCalc.App.Views.MainWindow"
+             Background="{StaticResource BackgroundPrimary}">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainViewModel />
-    </Design.DataContext>
+    <UserControl.Resources>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+        <!-- Основные цвета (научно-исследовательская лаборатория) -->
+        <SolidColorBrush x:Key="BackgroundPrimary" Color="#0F1419" />
+        <SolidColorBrush x:Key="BackgroundSurface" Color="#141B24" />
+        <SolidColorBrush x:Key="BackgroundSurfaceAlt" Color="#181F29" />
+        <SolidColorBrush x:Key="BackgroundElevated" Color="#1F2937" />
+        <SolidColorBrush x:Key="BackgroundCanvas" Color="#121823" />
 
-</Window>
+        <!-- Границы и разделители -->
+        <SolidColorBrush x:Key="BorderPrimary" Color="#2F3F4F" />
+        <SolidColorBrush x:Key="BorderSubtle" Color="#223040" />
+        <SolidColorBrush x:Key="BorderFocus" Color="#4CC9F0" />
+
+        <!-- Акцент (цианово-голубой — научный цвет) -->
+        <SolidColorBrush x:Key="AccentPrimary" Color="#4CC9F0" />
+        <SolidColorBrush x:Key="AccentPrimaryHover" Color="#5FD1FF" />
+        <SolidColorBrush x:Key="AccentPrimaryPressed" Color="#3FB3DE" />
+        <SolidColorBrush x:Key="AccentSuccess" Color="#3FB984" />
+        <SolidColorBrush x:Key="AccentWarning" Color="#F5A524" />
+        <SolidColorBrush x:Key="AccentDanger" Color="#F25F5C" />
+
+        <!-- Текст -->
+        <SolidColorBrush x:Key="TextPrimary" Color="#E6EDF3" />
+        <SolidColorBrush x:Key="TextSecondary" Color="#9FB3C8" />
+        <SolidColorBrush x:Key="TextTertiary" Color="#7F93A8" />
+        <SolidColorBrush x:Key="TextMuted" Color="#6B7F95" />
+        <SolidColorBrush x:Key="TextOnAccent" Color="#0F1419" />
+
+        <!-- Скругления -->
+        <CornerRadius x:Key="RadiusSmall">4</CornerRadius>
+        <CornerRadius x:Key="RadiusMedium">6</CornerRadius>
+        <CornerRadius x:Key="RadiusLarge">8</CornerRadius>
+
+        <!-- Шрифты -->
+        <FontFamily x:Key="DefaultFont">Inter, Segoe UI, sans-serif</FontFamily>
+        <FontFamily x:Key="MonoFont">JetBrains Mono, Consolas, Menlo, monospace</FontFamily>
+
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+
+       <!-- Базовый стиль для TextBlock -->
+    <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+    <!-- Моноширинный текст -->
+    <Style Selector="TextBlock.Mono">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+    </Style>
+
+    <Style Selector="TextBox.Mono">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+    </Style>
+
+        <!-- Кнопки TopBar -->
+        <Style Selector="ToggleButton.MethodButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="{StaticResource RadiusMedium}" />
+            <Setter Property="Padding" Value="10,5,10,5" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.08" />
+                    <BrushTransition Property="Foreground" Duration="0:0:0.08" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="ToggleButton.MethodButton:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        </Style>
+        <Style Selector="ToggleButton.MethodButton:checked /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AccentPrimary}" />
+            <Setter Property="Foreground" Value="{StaticResource TextOnAccent}" />
+        </Style>
+        <Style Selector="ToggleButton.MethodButton:checked:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AccentPrimaryHover}" />
+        </Style>
+
+        <!-- Переключатель режима -->
+        <Style Selector="RadioButton.ModeToggle">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="{StaticResource RadiusSmall}" />
+            <Setter Property="Padding" Value="8,4,8,4" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="MinHeight" Value="26" />
+        </Style>
+        <Style Selector="RadioButton.ModeToggle:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        </Style>
+        <Style Selector="RadioButton.ModeToggle:checked /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+            <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
+        </Style>
+
+        <!-- Кнопки -->
+        <Style Selector="Button.ActionPrimary">
+            <Setter Property="Background" Value="{StaticResource AccentPrimary}" />
+            <Setter Property="Foreground" Value="{StaticResource TextOnAccent}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="{StaticResource RadiusMedium}" />
+            <Setter Property="Padding" Value="14,6,14,6" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="MinHeight" Value="34" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.08" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.ActionPrimary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AccentPrimaryHover}" />
+        </Style>
+        <Style Selector="Button.ActionPrimary:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AccentPrimaryPressed}" />
+        </Style>
+        <Style Selector="Button.ActionPrimary:disabled /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+            <Setter Property="Foreground" Value="{StaticResource TextMuted}" />
+            <Setter Property="Opacity" Value="0.6" />
+        </Style>
+
+        <Style Selector="Button.ActionGhost">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource BorderPrimary}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="{StaticResource RadiusMedium}" />
+            <Setter Property="Padding" Value="12,6,12,6" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="MinHeight" Value="34" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.08" />
+                    <BrushTransition Property="Foreground" Duration="0:0:0.08" />
+                    <BrushTransition Property="BorderBrush" Duration="0:0:0.08" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.ActionGhost:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="BorderBrush" Value="#3A4F63" />
+        </Style>
+        <Style Selector="Button.ActionGhost:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="#202B3A" />
+        </Style>
+
+        <!-- ListBox -->
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="4" />
+            <Setter Property="SelectionMode" Value="Single" />
+        </Style>
+        <Style Selector="ListBoxItem">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+            <Setter Property="Padding" Value="8,5,8,5" />
+            <Setter Property="Margin" Value="2,1,2,1" />
+            <Setter Property="CornerRadius" Value="{StaticResource RadiusMedium}" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.08" />
+                    <BrushTransition Property="Foreground" Duration="0:0:0.08" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        </Style>
+        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="#1F354D" />
+            <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
+        </Style>
+        <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#243D5C" />
+        </Style>
+
+        <!-- Expander -->
+        <Style Selector="Expander">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="Expander /template/ ToggleButton#ExpanderHeader">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="8,5,6,5" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.08" />
+                    <BrushTransition Property="Foreground" Duration="0:0:0.08" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Expander /template/ ToggleButton#ExpanderHeader:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        </Style>
+        <Style Selector="Expander:expanded /template/ ToggleButton#ExpanderHeader">
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        </Style>
+        <Style Selector="Expander /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Padding" Value="6,2,6,6" />
+        </Style>
+
+        <!-- TabControl -->
+        <Style Selector="TabControl">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="TabItem">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+            <Setter Property="BorderThickness" Value="0,0,0,2" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Padding" Value="10,6,10,6" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Foreground" Duration="0:0:0.08" />
+                    <BrushTransition Property="BorderBrush" Duration="0:0:0.08" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="TabItem:pointerover">
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        </Style>
+        <Style Selector="TabItem:selected">
+            <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentPrimary}" />
+        </Style>
+        <Style Selector="TabItem:selected:pointerover">
+            <Setter Property="Foreground" Value="{StaticResource AccentPrimaryHover}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentPrimaryHover}" />
+        </Style>
+
+        <!-- TextBox -->
+        <Style Selector="TextBox.ExpressionInput">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="CaretBrush" Value="{StaticResource AccentPrimary}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="4,2,4,2" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="AcceptsReturn" Value="False" />
+            <Setter Property="TextWrapping" Value="NoWrap" />
+            <Setter Property="SelectionBrush" Value="#264F73" />
+        </Style>
+
+        <!-- Splitter -->
+        <Style Selector="GridSplitter">
+            <Setter Property="Background" Value="{StaticResource BorderSubtle}" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.1" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="GridSplitter:pointerover">
+            <Setter Property="Background" Value="#344558" />
+        </Style>
+        <Style Selector="GridSplitter:dragging">
+            <Setter Property="Background" Value="{StaticResource AccentPrimary}" />
+            <Setter Property="Opacity" Value="0.4" />
+        </Style>
+
+
+            <!-- ComboBox -->
+    <Style Selector="ComboBox">
+        <Setter Property="Background" Value="{StaticResource BackgroundCanvas}" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderPrimary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusMedium}" />
+        <Setter Property="Padding" Value="6,4,6,4" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style Selector="ComboBox:pointerover /template/ Border#Background">
+        <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+        <Setter Property="BorderBrush" Value="#3A4F63" />
+    </Style>
+
+    <Style Selector="ComboBox:focus /template/ Border#Background">
+        <Setter Property="BorderBrush" Value="{StaticResource BorderFocus}" />
+    </Style>
+
+    <!-- Выпадающий список ComboBox (Popup/ListBoxItem) -->
+    <Style Selector="ComboBoxItem">
+        <Setter Property="Background" Value="{StaticResource BackgroundSurface}" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        <Setter Property="Padding" Value="8,5,8,5" />
+        <Setter Property="Margin" Value="2,1,2,1" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusMedium}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.08" />
+                <BrushTransition Property="Foreground" Duration="0:0:0.08" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
+        <Setter Property="Background" Value="#1F354D" />
+        <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
+    </Style>
+
+    <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="#243D5C" />
+        <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
+    </Style>
+
+    <!-- Фон выпадающего Popup у ComboBox -->
+    <Style Selector="ComboBox /template/ Popup#PART_Popup">
+        <Setter Property="Placement" Value="Bottom" />
+    </Style>
+
+    <Style Selector="ComboBox /template/ Popup#PART_Popup Border#PopupBorder">
+        <Setter Property="Background" Value="{StaticResource BackgroundSurface}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderPrimary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusMedium}" />
+        <Setter Property="Padding" Value="2" />
+    </Style>
+
+    <!-- TextBox -->
+    <Style Selector="TextBox">
+        <Setter Property="Background" Value="{StaticResource BackgroundCanvas}" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        <Setter Property="CaretBrush" Value="{StaticResource AccentPrimary}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderPrimary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusMedium}" />
+        <Setter Property="SelectionBrush" Value="#264F73" />
+        <Setter Property="SelectionForegroundBrush" Value="{StaticResource TextPrimary}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{StaticResource BackgroundElevated}" />
+        <Setter Property="BorderBrush" Value="#3A4F63" />
+    </Style>
+
+    <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{StaticResource BackgroundCanvas}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderFocus}" />
+    </Style>
+
+    <Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{StaticResource BackgroundSurface}" />
+        <Setter Property="Opacity" Value="0.5" />
+    </Style>
+
+    <!-- Override для ExpressionInput (без рамки, как задумано) -->
+    <Style Selector="TextBox.ExpressionInput">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+        <Setter Property="CaretBrush" Value="{StaticResource AccentPrimary}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="Padding" Value="4,2,4,2" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="AcceptsReturn" Value="False" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
+        <Setter Property="SelectionBrush" Value="#264F73" />
+        <Setter Property="SelectionForegroundBrush" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <Style Selector="TextBox.ExpressionInput:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style Selector="TextBox.ExpressionInput:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+</UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- TOPBAR -->
+        <Border Grid.Row="0"
+                Background="{StaticResource BackgroundSurface}"
+                BorderBrush="{StaticResource BorderPrimary}"
+                BorderThickness="0,0,0,1"
+                Padding="10,6,10,6"
+                ZIndex="10">
+
+            <Grid ColumnDefinitions="*,Auto,Auto">
+
+                <!-- Левая часть -->
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            Spacing="4"
+                            VerticalAlignment="Center">
+
+                    <ToggleButton Classes="MethodButton" IsChecked="True">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="∫" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Интеграл" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </ToggleButton>
+
+                    <ToggleButton Classes="MethodButton">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="d/dx" FontSize="13" VerticalAlignment="Center" />
+                            <TextBlock Text="Производная" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </ToggleButton>
+
+                    <ToggleButton Classes="MethodButton">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="[A]x=b" FontSize="12" VerticalAlignment="Center" />
+                            <TextBlock Text="СЛАУ" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </ToggleButton>
+
+                    <ToggleButton Classes="MethodButton">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="∑" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Сумма/Ряд" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </ToggleButton>
+
+                    <Border Width="1"
+                            Margin="4,0,4,0"
+                            Background="{StaticResource BorderPrimary}"
+                            VerticalAlignment="Stretch" />
+
+                    <TextBlock Text="Метод: Трапеции"
+                               Foreground="{StaticResource TextSecondary}"
+                               VerticalAlignment="Center"
+                               Margin="4,0,0,0"
+                               FontSize="13" />
+                </StackPanel>
+
+                <!-- Превью формулы -->
+                <Border Grid.Column="1"
+                        Background="{StaticResource BackgroundCanvas}"
+                        BorderBrush="{StaticResource BorderPrimary}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource RadiusMedium}"
+                        Padding="10,4,10,4"
+                        Margin="8,0,8,0"
+                        MaxWidth="520"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Opacity="0.95">
+
+                    <TextBlock Text="$$\int_{0}^{10}\left(\sin\left(x^{2}\right)+\ln\left(x\right)\right)\,dx$$"
+                               FontSize="13"
+                               Foreground="{StaticResource TextSecondary}"
+                               VerticalAlignment="Center"
+                               TextTrimming="None"
+                               TextWrapping="NoWrap" />
+                </Border>
+
+                <!-- Режим редактора -->
+                <Border Grid.Column="2"
+                        Background="{StaticResource BackgroundCanvas}"
+                        BorderBrush="{StaticResource BorderPrimary}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource RadiusMedium}"
+                        Padding="2"
+                        VerticalAlignment="Center">
+
+                    <StackPanel Orientation="Horizontal" Spacing="2">
+                        <RadioButton Classes="ModeToggle"
+                                      Content="Блочный"
+                                      IsChecked="True" />
+                        <RadioButton Classes="ModeToggle"
+                                      Content="Текстовый (LaTeX)" />
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+        </Border>
+
+        <!-- ОСНОВНАЯ ОБЛАСТЬ -->
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240" MinWidth="200" MaxWidth="320" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition Width="*" MinWidth="560" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition Width="200" MinWidth="160" MaxWidth="240" />
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT TOOLBOX -->
+            <Border Grid.Column="0"
+                    Background="{StaticResource BackgroundSurface}"
+                    BorderBrush="{StaticResource BorderPrimary}"
+                    BorderThickness="0,0,1,0">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              AllowAutoHide="True">
+
+                    <StackPanel Spacing="2">
+
+                        <TextBlock Classes="SectionHeader"
+                                   Text="ИНСТРУМЕНТЫ КОНСТРУКТОРА"
+                                   Margin="8,8,8,4" />
+
+                        <Expander IsExpanded="True">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="▸" FontSize="10" VerticalAlignment="Center" />
+                                    <TextBlock Text="Базовые" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <StackPanel Spacing="1">
+                                <ListBoxItem Content="Переменная x" />
+                                <ListBoxItem Content="Число (константа)" />
+                                <ListBoxItem Content="Скобки ( ... )" />
+                                <ListBoxItem Content="Разделитель , ;" />
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander IsExpanded="True">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="▸" FontSize="10" VerticalAlignment="Center" />
+                                    <TextBlock Text="Операторы" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <StackPanel Spacing="1">
+                                <ListBoxItem Content="+  Сложение" />
+                                <ListBoxItem Content="−  Вычитание" />
+                                <ListBoxItem Content="×  Умножение" />
+                                <ListBoxItem Content="÷  Деление" />
+                                <ListBoxItem Content="^  Возведение в степень" />
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander IsExpanded="True">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="▸" FontSize="10" VerticalAlignment="Center" />
+                                    <TextBlock Text="Элементарные функции" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <StackPanel Spacing="1">
+                                <ListBoxItem Content="sin(x)" />
+                                <ListBoxItem Content="cos(x)" />
+                                <ListBoxItem Content="tan(x)" />
+                                <ListBoxItem Content="ln(x)" />
+                                <ListBoxItem Content="log10(x)" />
+                                <ListBoxItem Content="exp(x)" />
+                                <ListBoxItem Content="sqrt(x)" />
+                                <ListBoxItem Content="abs(x)" />
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander IsExpanded="True">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="▸" FontSize="10" VerticalAlignment="Center" />
+                                    <TextBlock Text="Шаблоны задач" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <StackPanel Spacing="1">
+                                <ListBoxItem Content="∫_{a}^{b} f(x) dx" />
+                                <ListBoxItem Content="f'(x0)" />
+                                <ListBoxItem Content="∑_{i=1}^{n} a_i" />
+                                <ListBoxItem Content="∑_{k=1}^{∞} a_k" />
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander IsExpanded="False">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="▸" FontSize="10" VerticalAlignment="Center" />
+                                    <TextBlock Text="Матрицы и векторы" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <StackPanel Spacing="1">
+                                <ListBoxItem Content="Матрица A [m×n]" />
+                                <ListBoxItem Content="Вектор b [n×1]" />
+                                <ListBoxItem Content="Единичная матрица E" />
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander IsExpanded="False">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="▸" FontSize="10" VerticalAlignment="Center" />
+                                    <TextBlock Text="Пресеты и примеры" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <StackPanel Spacing="1">
+                                <ListBoxItem Content="Пример: ∫_0^1 x^2 dx" />
+                                <ListBoxItem Content="Пример: ∫_0^∞ e^{-x^2} dx" />
+                                <ListBoxItem Content="Классика: sin(x)/x" />
+                            </StackPanel>
+                        </Expander>
+
+                        <Border Height="1"
+                                Margin="8,6,8,4"
+                                Background="{StaticResource BorderSubtle}" />
+
+                        <StackPanel Margin="6,2,6,8" Spacing="4">
+                            <Button Classes="ActionGhost" HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="🗑" FontSize="13" VerticalAlignment="Center" />
+                                    <TextBlock Text="Очистить выражение" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="ActionGhost" HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="⤷" FontSize="13" VerticalAlignment="Center" />
+                                    <TextBlock Text="Свернуть блоки" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <GridSplitter Grid.Column="1"
+                          Width="6"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          Background="Transparent" />
+
+            <!-- WORKSPACE -->
+            <Border Grid.Column="2"
+                    Background="{StaticResource BackgroundPrimary}">
+
+                <Grid RowDefinitions="Auto,*,Auto">
+
+                    <!-- Workspace Header -->
+                    <Border Grid.Row="0"
+                            Background="{StaticResource BackgroundSurfaceAlt}"
+                            BorderBrush="{StaticResource BorderPrimary}"
+                            BorderThickness="0,0,0,1"
+                            Padding="16,10,16,10">
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto">
+
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Text="f(x) ="
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,10,0" />
+
+                            <Border Grid.Row="0"
+                                    Grid.Column="1"
+                                    Background="{StaticResource BackgroundCanvas}"
+                                    BorderBrush="{StaticResource BorderPrimary}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource RadiusLarge}"
+                                    MinHeight="48"
+                                    Padding="10,6,10,6"
+                                    VerticalAlignment="Center">
+
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                              VerticalScrollBarVisibility="Disabled"
+                                              AllowAutoHide="True">
+
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="4"
+                                                VerticalAlignment="Center">
+
+                                        <Border Background="#1F354D"
+                                                BorderBrush="{StaticResource AccentPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="8,4,8,4">
+                                            <TextBlock Text="sin("
+                                                       FontSize="14"
+                                                       FontWeight="Medium" />
+                                        </Border>
+
+                                        <Border Background="{StaticResource BackgroundElevated}"
+                                                BorderBrush="{StaticResource BorderPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="8,4,8,4">
+                                            <TextBlock Text="x^2"
+                                                       FontSize="14"
+                                                       FontWeight="Medium" />
+                                        </Border>
+
+                                        <Border Background="#1F354D"
+                                                BorderBrush="{StaticResource AccentPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="8,4,8,4">
+                                            <TextBlock Text=")"
+                                                       FontSize="14"
+                                                       FontWeight="Medium" />
+                                        </Border>
+
+                                        <Border Background="{StaticResource BackgroundElevated}"
+                                                BorderBrush="{StaticResource BorderPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="6,4,6,4">
+                                            <TextBlock Text="+"
+                                                       FontSize="14"
+                                                       FontWeight="SemiBold" />
+                                        </Border>
+
+                                        <Border Background="#1F354D"
+                                                BorderBrush="{StaticResource AccentPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="8,4,8,4">
+                                            <TextBlock Text="ln("
+                                                       FontSize="14"
+                                                       FontWeight="Medium" />
+                                        </Border>
+
+                                        <Border Background="{StaticResource BackgroundElevated}"
+                                                BorderBrush="{StaticResource BorderPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="8,4,8,4">
+                                            <TextBlock Text="x"
+                                                       FontSize="14"
+                                                       FontWeight="Medium"
+                                                       Foreground="{StaticResource AccentPrimary}" />
+                                        </Border>
+
+                                        <Border Background="#1F354D"
+                                                BorderBrush="{StaticResource AccentPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="8,4,8,4">
+                                            <TextBlock Text=")"
+                                                       FontSize="14"
+                                                       FontWeight="Medium" />
+                                        </Border>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Border>
+
+                            <StackPanel Grid.Row="0"
+                                        Grid.Column="2"
+                                        Orientation="Horizontal"
+                                        Spacing="4"
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center">
+
+                                <Button Classes="ActionGhost" Padding="8,6,8,6" MinHeight="36">
+                                    <TextBlock Text="x" FontSize="14" FontWeight="SemiBold" />
+                                </Button>
+                                <Button Classes="ActionGhost" Padding="8,6,8,6" MinHeight="36">
+                                    <TextBlock Text="^" FontSize="14" FontWeight="SemiBold" />
+                                </Button>
+                                <Button Classes="ActionGhost" Padding="8,6,8,6" MinHeight="36">
+                                    <TextBlock Text="÷" FontSize="14" FontWeight="SemiBold" />
+                                </Button>
+                                <Button Classes="ActionGhost" Padding="8,6,8,6" MinHeight="36">
+                                    <TextBlock Text="( )" FontSize="13" FontWeight="SemiBold" />
+                                </Button>
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="1"
+                                       Grid.ColumnSpan="2"
+                                       Text="Структура: Бинарное сложение → (sin(x^2)) + (ln(x))"
+                                       Foreground="{StaticResource TextMuted}"
+                                       FontSize="11"
+                                       Margin="4,6,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Параметры -->
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  Padding="16,12,16,12">
+
+                        <StackPanel Spacing="10" MaxWidth="920">
+
+                            <Border Background="{StaticResource BackgroundSurface}"
+                                    BorderBrush="{StaticResource BorderPrimary}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource RadiusLarge}"
+                                    Padding="14,10,14,12">
+
+                                <StackPanel Spacing="10">
+
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="⚙" FontSize="14" VerticalAlignment="Center" />
+                                        <TextBlock Text="Параметры задачи"
+                                                   FontSize="13"
+                                                   FontWeight="SemiBold"
+                                                   VerticalAlignment="Center" />
+                                        <TextBlock Text="• Определённый интеграл"
+                                                   FontSize="12"
+                                                   Foreground="{StaticResource TextSecondary}"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+
+                                    <Grid ColumnDefinitions="Auto,*,Auto,*"
+                                          RowDefinitions="Auto,Auto"
+                                          RowSpacing="8"
+                                          ColumnSpacing="10">
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                                   Text="Нижний предел a ="
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{StaticResource TextSecondary}" />
+                                        <Border Grid.Row="0" Grid.Column="1"
+                                                Background="{StaticResource BackgroundCanvas}"
+                                                BorderBrush="{StaticResource BorderPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="6,2,6,2"
+                                                Height="34">
+                                            <TextBox Classes="Mono ExpressionInput"
+                                                     Text="0"
+                                                     VerticalAlignment="Center" />
+                                        </Border>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="2"
+                                                   Text="Верхний предел b ="
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{StaticResource TextSecondary}"
+                                                   Margin="6,0,0,0" />
+                                        <Border Grid.Row="0" Grid.Column="3"
+                                                Background="{StaticResource BackgroundCanvas}"
+                                                BorderBrush="{StaticResource BorderPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="6,2,6,2"
+                                                Height="34">
+                                            <TextBox Classes="Mono ExpressionInput"
+                                                     Text="10"
+                                                     VerticalAlignment="Center" />
+                                        </Border>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                                   Text="Метод"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{StaticResource TextSecondary}" />
+                                        <Border Grid.Row="1" Grid.Column="1"
+                                                Background="{StaticResource BackgroundCanvas}"
+                                                BorderBrush="{StaticResource BorderPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="6,4,6,4"
+                                                Height="34">
+                                            <ComboBox SelectedIndex="0"
+                                                      Background="Transparent"
+                                                      BorderThickness="0"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Stretch">
+                                                <ComboBoxItem Content="Метод трапеций" />
+                                                <ComboBoxItem Content="Метод Симпсона" />
+                                                <ComboBoxItem Content="Адаптивный" />
+                                            </ComboBox>
+                                        </Border>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="2"
+                                                   Text="Точность ε ="
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{StaticResource TextSecondary}"
+                                                   Margin="6,0,0,0" />
+                                        <Border Grid.Row="1" Grid.Column="3"
+                                                Background="{StaticResource BackgroundCanvas}"
+                                                BorderBrush="{StaticResource BorderPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="6,2,6,2"
+                                                Height="34">
+                                            <TextBox Classes="Mono ExpressionInput"
+                                                     Text="1.0e-6"
+                                                     VerticalAlignment="Center" />
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- Кнопки -->
+                    <Border Grid.Row="2"
+                            Background="{StaticResource BackgroundSurfaceAlt}"
+                            BorderBrush="{StaticResource BorderPrimary}"
+                            BorderThickness="0,1,0,0"
+                            Padding="16,8,16,8">
+
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Grid.Column="0"
+                                        Orientation="Horizontal"
+                                        Spacing="6"
+                                        VerticalAlignment="Center">
+                                <Ellipse Width="8"
+                                         Height="8"
+                                         Fill="{StaticResource AccentSuccess}" />
+                                <TextBlock Text="Выражение валидно"
+                                           Foreground="{StaticResource TextSecondary}"
+                                           FontSize="12" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2"
+                                        Orientation="Horizontal"
+                                        Spacing="6"
+                                        VerticalAlignment="Center">
+                                <Button Classes="ActionGhost">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="⏸" FontSize="13" />
+                                        <TextBlock Text="Прервать" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="ActionPrimary">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="▶" FontSize="13" />
+                                        <TextBlock Text="Вычислить" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <GridSplitter Grid.Column="3"
+                          Width="6"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          Background="Transparent" />
+
+            <!-- SIDEBAR -->
+            <Border Grid.Column="4"
+                    Background="{StaticResource BackgroundSurface}"
+                    BorderBrush="{StaticResource BorderPrimary}"
+                    BorderThickness="1,0,0,0">
+
+                <Grid RowDefinitions="Auto,*,Auto">
+                    <TextBlock Grid.Row="0"
+                               Classes="SectionHeader"
+                               Text="НАВИГАЦИЯ"
+                               Margin="8,8,8,4" />
+
+                    <StackPanel Grid.Row="1" Spacing="1" Margin="4,0,4,4">
+                        <ListBoxItem IsSelected="True">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="∙" FontSize="16" />
+                                <TextBlock Text="Вычисления" />
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="⏱" FontSize="13" />
+                                <TextBlock Text="История" />
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="📚" FontSize="13" />
+                                <TextBlock Text="Примеры" />
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="📄" FontSize="13" />
+                                <TextBlock Text="Справка" />
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="✉" FontSize="13" />
+                                <TextBlock Text="Обратная связь / TG" />
+                            </StackPanel>
+                        </ListBoxItem>
+                    </StackPanel>
+
+                    <Border Grid.Row="2"
+                            BorderBrush="{StaticResource BorderSubtle}"
+                            BorderThickness="0,1,0,0"
+                            Padding="8,6,8,6">
+
+                        <StackPanel Spacing="4">
+                            <TextBlock Classes="SectionHeader"
+                                       Text="ПОСЛЕДНИЕ"
+                                       Margin="0,0,0,2" />
+
+                            <ListBoxItem Padding="6,4,6,4">
+                                <StackPanel Spacing="2">
+                                    <TextBlock Text="∫₀¹ x² dx" FontSize="12" FontWeight="Medium" />
+                                    <TextBlock Text="= 0.333333…" Classes="Mono" FontSize="11" Foreground="{StaticResource AccentSuccess}" />
+                                </StackPanel>
+                            </ListBoxItem>
+
+                            <ListBoxItem Padding="6,4,6,4">
+                                <StackPanel Spacing="2">
+                                    <TextBlock Text="∫₀¹⁰ sin(x²)+ln(x)" FontSize="12" FontWeight="Medium" />
+                                    <TextBlock Text="≈ 17.1348" Classes="Mono" FontSize="11" Foreground="{StaticResource TextSecondary}" />
+                                </StackPanel>
+                            </ListBoxItem>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- RESULTS -->
+        <Expander Grid.Row="2"
+                  IsExpanded="False"
+                  ExpandDirection="Down"
+                  VerticalAlignment="Bottom">
+
+            <Expander.Header>
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                Spacing="8"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="📊" FontSize="14" />
+                        <TextBlock Text="Результаты и аналитика"
+                                   FontSize="13"
+                                   FontWeight="SemiBold" />
+                        <Border Background="{StaticResource BackgroundElevated}"
+                                CornerRadius="10"
+                                Padding="6,1,6,1">
+                            <TextBlock Text="Готово"
+                                       FontSize="10"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentSuccess}" />
+                        </Border>
+                    </StackPanel>
+
+                    <TextBlock Grid.Column="1"
+                               Text="Значение: ≈ 17.1348123 | Погрешность: 5.0e-7 | Шагов: 1024"
+                               Classes="Mono"
+                               Foreground="{StaticResource TextSecondary}"
+                               FontSize="11"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="12,0,12,0" />
+
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                Spacing="8"
+                                Margin="0,0,6,0">
+                        <TextBlock Text="Время: 42мс" Classes="Mono" Foreground="{StaticResource TextSecondary}" FontSize="11" />
+                        <Border Width="1" Height="14" Background="{StaticResource BorderPrimary}" />
+                        <TextBlock Text="Итераций: 1024" Classes="Mono" Foreground="{StaticResource TextSecondary}" FontSize="11" />
+                    </StackPanel>
+
+                    <Button Grid.Column="3"
+                            Classes="ActionGhost"
+                            Padding="8,4,8,4"
+                            MinHeight="28">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="↓" FontSize="12" />
+                            <TextBlock Text="Экспорт PDF" FontSize="12" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Expander.Header>
+
+            <Border Background="{StaticResource BackgroundSurface}"
+                    BorderBrush="{StaticResource BorderPrimary}"
+                    BorderThickness="0,1,0,0"
+                    Height="320"
+                    MinHeight="240"
+                    MaxHeight="420">
+
+                <Grid RowDefinitions="Auto,*">
+                    <Border Grid.Row="0"
+                            Background="{StaticResource BackgroundSurfaceAlt}"
+                            BorderBrush="{StaticResource BorderSubtle}"
+                            BorderThickness="0,0,0,1"
+                            Padding="6,2,6,2">
+
+                        <TabControl>
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="📈" FontSize="13" />
+                                        <TextBlock Text="График" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <Border Background="{StaticResource BackgroundCanvas}"
+                                        Margin="8"
+                                        CornerRadius="{StaticResource RadiusMedium}"
+                                        BorderBrush="{StaticResource BorderPrimary}"
+                                        BorderThickness="1">
+                                    <TextBlock Text="Область построения графика (ScottPlot)"
+                                               Foreground="{StaticResource TextMuted}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontStyle="Italic" />
+                                </Border>
+                            </TabItem>
+
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="🧮" FontSize="13" />
+                                        <TextBlock Text="Пошаговое решение" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <ScrollViewer Margin="8">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Ход численного интегрирования (метод трапеций)"
+                                                   FontWeight="SemiBold"
+                                                   Margin="4,2,4,4" />
+                                        <Border Background="{StaticResource BackgroundCanvas}"
+                                                BorderBrush="{StaticResource BorderPrimary}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource RadiusMedium}"
+                                                Padding="10,8,10,8">
+                                            <StackPanel Spacing="4">
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <TextBlock Text="Шаг 1." FontWeight="SemiBold" Foreground="{StaticResource AccentPrimary}" />
+                                                    <TextBlock Text="Разбиение отрезка [0,10] на n=1024" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <TextBlock Text="Шаг 2." FontWeight="SemiBold" Foreground="{StaticResource AccentPrimary}" />
+                                                    <TextBlock Text="Вычисление f(x_i)" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <TextBlock Text="Шаг 3." FontWeight="SemiBold" Foreground="{StaticResource AccentPrimary}" />
+                                                    <TextBlock Text="Формула трапеций" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <TextBlock Text="Шаг 4." FontWeight="SemiBold" Foreground="{StaticResource AccentPrimary}" />
+                                                    <TextBlock Text="Оценка погрешности" />
+                                                </StackPanel>
+                                                <Border Height="1" Margin="0,4,0,2" Background="{StaticResource BorderSubtle}" />
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <TextBlock Text="Итог:" FontWeight="SemiBold" Foreground="{StaticResource TextSecondary}" />
+                                                    <TextBlock Text="I ≈ 17.134812346" Classes="Mono" FontWeight="SemiBold" Foreground="{StaticResource AccentSuccess}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </TabItem>
+
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="📋" FontSize="13" />
+                                        <TextBlock Text="Трасса итераций" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <Grid RowDefinitions="Auto,*" Margin="8">
+                                    <Border Grid.Row="0"
+                                            Background="{StaticResource BackgroundCanvas}"
+                                            BorderBrush="{StaticResource BorderPrimary}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource RadiusMedium}"
+                                            Padding="6,4,6,4"
+                                            Margin="0,0,0,6">
+                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
+                                                <Button Classes="ActionGhost" Padding="6,4,6,4" MinHeight="28">
+                                                    <TextBlock Text="▶" FontSize="12" />
+                                                </Button>
+                                                <Button Classes="ActionGhost" Padding="6,4,6,4" MinHeight="28">
+                                                    <TextBlock Text="⏸" FontSize="12" />
+                                                </Button>
+                                                <Button Classes="ActionGhost" Padding="6,4,6,4" MinHeight="28">
+                                                    <TextBlock Text="⏭" FontSize="12" />
+                                                </Button>
+                                                <Border Width="1" Margin="2,0,2,0" Background="{StaticResource BorderPrimary}" />
+                                                <TextBlock Text="Breakpoint:" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="4,0,4,0" VerticalAlignment="Center" />
+                                                <Border Background="{StaticResource BackgroundSurface}"
+                                                        BorderBrush="{StaticResource BorderPrimary}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="{StaticResource RadiusSmall}"
+                                                        Padding="6,2,6,2"
+                                                        Width="70">
+                                                    <TextBox Classes="Mono ExpressionInput"
+                                                             Text="k == 500"
+                                                             FontSize="11"
+                                                             VerticalAlignment="Center" />
+                                                </Border>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1"
+                                                       Text="Текущая итерация: — | Состояние: Ожидание запуска"
+                                                       Foreground="{StaticResource TextMuted}"
+                                                       FontSize="11"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Border>
+
+                                    <Border Grid.Row="1"
+                                            Background="{StaticResource BackgroundCanvas}"
+                                            BorderBrush="{StaticResource BorderPrimary}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource RadiusMedium}">
+                                        <TextBlock Text="Трасса итераций будет заполняться в процессе пошагового вычисления"
+                                                   Foreground="{StaticResource TextMuted}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontStyle="Italic"
+                                                   TextAlignment="Center"
+                                                   Margin="16" />
+                                    </Border>
+                                </Grid>
+                            </TabItem>
+
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="📉" FontSize="13" />
+                                        <TextBlock Text="Сходимость" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <Border Background="{StaticResource BackgroundCanvas}"
+                                        Margin="8"
+                                        CornerRadius="{StaticResource RadiusMedium}"
+                                        BorderBrush="{StaticResource BorderPrimary}"
+                                        BorderThickness="1">
+                                    <TextBlock Text="График сходимости (log|ε_k| от k)"
+                                               Foreground="{StaticResource TextMuted}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontStyle="Italic" />
+                                </Border>
+                            </TabItem>
+
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="✓" FontSize="13" />
+                                        <TextBlock Text="Невязка" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <Border Background="{StaticResource BackgroundCanvas}"
+                                        Margin="8"
+                                        CornerRadius="{StaticResource RadiusMedium}"
+                                        BorderBrush="{StaticResource BorderPrimary}"
+                                        BorderThickness="1">
+                                    <TextBlock Text="Анализ невязки и апостериорная оценка погрешности"
+                                               Foreground="{StaticResource TextMuted}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontStyle="Italic" />
+                                </Border>
+                            </TabItem>
+                        </TabControl>
+                    </Border>
+                </Grid>
+            </Border>
+        </Expander>
+
+        <!-- STATUSBAR -->
+        <Border Grid.Row="3"
+                Background="{StaticResource BackgroundSurface}"
+                BorderBrush="{StaticResource BorderPrimary}"
+                BorderThickness="0,1,0,0"
+                Padding="12,4,12,4"
+                Height="28">
+
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            Spacing="6"
+                            VerticalAlignment="Center">
+                    <Ellipse Width="6"
+                             Height="6"
+                             Fill="{StaticResource AccentSuccess}" />
+                    <TextBlock Text="Готов к вычислению"
+                               Foreground="{StaticResource TextSecondary}"
+                               FontSize="11" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            Spacing="8"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="Точность достигнута: да" Foreground="{StaticResource TextSecondary}" FontSize="11" />
+                    <Border Width="1" Height="12" Background="{StaticResource BorderPrimary}" />
+                    <TextBlock Text="Время: 0 мс" Classes="Mono" Foreground="{StaticResource TextSecondary}" FontSize="11" />
+                    <Border Width="1" Height="12" Background="{StaticResource BorderPrimary}" />
+                    <TextBlock Text="CPU: 1.2%" Classes="Mono" Foreground="{StaticResource TextSecondary}" FontSize="11" />
+                    <Border Width="1" Height="12" Background="{StaticResource BorderPrimary}" />
+                    <TextBlock Text="RAM: 124 МБ" Classes="Mono" Foreground="{StaticResource TextSecondary}" FontSize="11" />
+                </StackPanel>
+
+                <TextBlock Grid.Column="3"
+                           Text="NumCalcLab • Режим: Конструктор"
+                           Foreground="{StaticResource TextMuted}"
+                           FontSize="10"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center" />
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>
